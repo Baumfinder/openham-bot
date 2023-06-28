@@ -119,11 +119,24 @@ async def on_raw_reaction_add(payload):
 @discord.app_commands.choices(choice=[
 	discord.app_commands.Choice(name = "Agree once", value = "once"),
 	discord.app_commands.Choice(name = "Agree always", value = "always"),
+	discord.app_commands.Choice(name = "Disagree", value = "disagree"),
 ])
 async def agree_command(itr: discord.Interaction, choice: discord.app_commands.Choice[str]):
+	if choice.value == "disagree":
+		del_msgs: list(int) = []
+		for msg_id in pending_msgs:
+			if pending_msgs[msg_id].submitted_msg.author.id == itr.user.id:
+				del_msgs.append(msg_id)
+		
+		for msg_id in del_msgs:
+			del pending_msgs[msg_id]
+
+		await itr.response.send_message("Disagreed successfully!", ephemeral=True)
+		return
+
 	if choice.value == "always":
 		user_registry.users.append(itr.user.id)
-	
+
 	ok_msgs: list(int) = []
 	for msg_id in pending_msgs:
 		if pending_msgs[msg_id].submitted_msg.author.id == itr.user.id:
