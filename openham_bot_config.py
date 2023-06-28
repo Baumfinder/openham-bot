@@ -9,3 +9,4 @@ wiki_password_file = "OPENHAM_PASS.txt"
 
 agreemsg = """A message of you has been submitted to be released on https://openham.wiki. Do you agree to your message being released on the wiki?
 Use the `/agree` command in the discord to agree."""
+msgsubmitted = """Your message has been added to the wiki:"""

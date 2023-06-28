@@ -65,6 +65,9 @@ async def write_to_wiki(pmsg: PendingMessage):
 	content += " *Submitted to wiki by " + pmsg.approved_by.name + "!*"
 	await pmsg.approving_msg.edit(content=content)
 	
+	channel = await pmsg.submitted_msg.author.create_dm()
+	await channel.send(conf.msgsubmitted + "\nTitle: " + pmsg.title + "\n" + pmsg.submitted_msg.jump_url )
+
 	del pending_msgs[pmsg.approving_msg.id]
 
 @discord_tree.command(name = "ping", description = "Sends Pong.", guild=discord.Object(id=conf.discord_server_id))
