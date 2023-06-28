@@ -1,6 +1,7 @@
 import pywikibot
 import discord
 import os
+import time
 
 import openham_bot_config as conf
 
@@ -81,6 +82,7 @@ async def clean_verify_chan_command(itr: discord.Interaction):
 	async for message in channel.history(limit=1000):
 		if not message.id in pending_msgs:
 			await message.delete()
+			time.sleep(0.1)
 	
 	await itr.response.send_message("Verifying Channel has been cleaned!", ephemeral=True)
 
